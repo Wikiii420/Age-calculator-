@@ -1,11 +1,10 @@
-# Age-calculator-
-This is a very useful app in the world  It correct age calculator app 
-html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautiful Age Calculator</title>
+    <title>Birthday Age Calculator</title>
     <style>
         * {
             margin: 0;
@@ -13,27 +12,31 @@ html>
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            background: linear-gradient(to right, #6a11cb, #2575fc);
         }
-        .calculator {
-            background-color: white;
+
+        .container {
+            background: white;
             padding: 40px 30px;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             text-align: center;
             width: 90%;
             max-width: 400px;
         }
+
         h1 {
             margin-bottom: 20px;
             color: #333;
             font-size: 2rem;
         }
+
         input {
             width: 80%;
             padding: 12px;
@@ -42,9 +45,10 @@ html>
             border-radius: 8px;
             font-size: 1rem;
         }
+
         button {
             padding: 12px 30px;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            background: linear-gradient(to right, #2575fc, #6a11cb);
             border: none;
             color: white;
             font-size: 1rem;
@@ -52,9 +56,71 @@ html>
             cursor: pointer;
             transition: background 0.3s;
         }
-        button:hover {
-            background: linear-gradient(135deg, #0072ff, #00c6ff);
-        }
-        tor">
-    <h1>Age 
 
+        button:hover {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Birthday Age Calculator 🎉</h1>
+        <input type="date" id="dob">
+        <button onclick="calculateAge()">Calculate Age</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const dobInput = document.getElementById('dob').value;
+            if (dobInput === '') {
+                alert('Please select your date of birth.');
+                return;
+            }
+
+            const dob = new Date(dobInput);
+            const today = new Date();
+
+            let ageYears = today.getFullYear() - dob.getFullYear();
+            let ageMonths = today.getMonth() - dob.getMonth();
+            let ageDays = today.getDate() - dob.getDate();
+
+            if (ageDays < 0) {
+                ageMonths--;
+                ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+
+            if (ageMonths < 0) {
+                ageYears--;
+                ageMonths += 12;
+            }
+
+            let birthdayMessage = '';
+            if (today.getDate() === dob.getDate() && today.getMonth() === dob.getMonth()) {
+                birthdayMessage = '🎉 Happy Birthday! 🎉';
+            } else {
+                // Calculate next birthday
+                let nextBirthday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+                if (nextBirthday < today) {
+                    nextBirthday.setFullYear(today.getFullYear() + 1);
+                }
+
+                const oneDay = 24 * 60 * 60 * 1000;
+                const daysLeft = Math.round((nextBirthday - today) / oneDay);
+
+                birthdayMessage = `🎁 Your birthday is in ${daysLeft} day(s). 🎁`;
+            }
+
+            document.getElementById('result').innerHTML = `
+                You are <b>${ageYears}</b> years, <b>${ageMonths}</b> months, and <b>${ageDays}</b> days old.<br><br>${birthdayMessage}
+            `;
+        }
+    </script>
+</body>
+</html>
