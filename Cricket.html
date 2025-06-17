@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game with Full Sounds</title>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #56ccf2, #2f80ed);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #2f80ed;
+        }
+
+        .scoreboard {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2f80ed;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1c6dd0;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .ball.animate {
+            animation: ballMove 1s linear;
+        }
+
+        @keyframes ballMove {
+            from {
+                left: -150px;
+            }
+
+            to {
+                left: 150px;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .glow {
+            animation: glowEffect 1s;
+        }
+
+        @keyframes glowEffect {
+            0% {
+                color: black;
+            }
+
+            50% {
+                color: green;
+            }
+
+            100% {
+                color: black;
+            }
+        }
+    </style>
+</head>
+
+<body onload="startBackgroundMusic()">
+    <div class="game-container">
+        <h1>Cricket Game</h1>
+        <div class="ball" id="ball"></div>
+
+        <div class="scoreboard">
+            <p>Runs: <span id="runs">0</span></p>
+            <p>Wickets: <span id="wickets">0</span></p>
+            <p>Balls: <span id="balls">0</span> / 12</p>
+        </div>
+
+        <button onclick="play(1)">Run 1</button>
+        <button onclick="play(2)">Run 2</button>
+        <button onclick="play(3)">Run 3</button>
+        <button onclick="play(4)">Run 4</button>
+        <button onclick="play(6)">Run 6</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <!-- Sound Files -->
+    <audio id="ballSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+    <audio id="runSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+    <audio id="outSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+    <audio id="backgroundMusic" src="https://www.bensound.com/bensound-music/bensound-goinghigher.mp3" loop></audio>
+    <audio id="winSound" src="https://www.soundjay.com/human/sounds/applause-8.mp3"></audio>
+    <audio id="loseSound" src="https://www.soundjay.com/human/sounds/boo-01.mp3"></audio>
+
+    <script>
+        let runs = 0;
+        let wickets = 0;
+        let balls = 0;
+        let maxBalls = 12;
+        let targetRuns = 30;
+
+        function startBackgroundMusic() {
+            let bgMusic = document.getElementById('backgroundMusic');
+            bgMusic.play();
+        }
+
+        function play(selectedRun) {
+            if (balls >= maxBalls || wickets >= 2) return;
+
+            let bowling = Math.floor(Math.random() * 7);
+            balls++;
+
+            let ball = document.getElementById('ball');
+            let result = document.getElementById('result');
+
+            let ballSound = document.getElementById('ballSound');
+            let runSound = document.getElementById('runSound');
+            let outSound = document.getElementById('outSound');
+            let winSound = document.getElementById('winSound');
+            let loseSound = document.getElementById('loseSound');
+
+            ballSound.play();
+
+            ball.classList.remove('animate');
+            void ball.offsetWidth;
+            ball.classList.add('animate');
+
+            if (bowling === selectedRun) {
+                wickets++;
+                result.innerText = "OUT!";
+                result.className = 'result shake';
+                outSound.play();
+            } else {
+                runs += selectedRun;
+                result.innerText = `You scored ${selectedRun} run(s)!`;
+                result.className = 'result glow';
+                runSound.play();
+            }
+
+            updateScore();
+
+            if (balls >= maxBalls || wickets >= 2) {
+                if (runs >= targetRuns) {
+                    result.innerText += `\nYou Won! Final Score: ${runs}/${wickets}`;
+                    winSound.play();
+                } else {
+                    result.innerText += `\nYou Lost! Final Score: ${runs}/${wickets}`;
+                    loseSound.play();
+                }
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('runs').innerText = runs;
+            document.getElementById('wickets').innerText = wickets;
+            document.getElementById('balls').innerText = balls;
+        }
+    </script>
+</body>
+
+</html>
