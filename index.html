@@ -3,124 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Age Calculator</title>
+    <title>Super Age Calculator</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            transition: background 2s;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px #000;
-        }
-        input {
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 10px;
-            border: 2px solid white;
-            margin-bottom: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            border: none;
-            background: #ff4b2b;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
             transition: background 0.5s;
         }
+        input, button, select {
+            padding: 10px 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
         button:hover {
-            background: #ff416c;
+            background-color: #45a049;
         }
-        #result, #clock, #birthdayWish {
+        #profilePic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 15px 0;
+        }
+        #clock {
             margin-top: 20px;
-            font-size: 1.5rem;
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: yellow;
-            animation: fall 4s linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-10px) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
 
-    <h1>🎂 Birthday Age Calculator 🎉</h1>
+    <h1>Super Age Calculator</h1>
 
-    <input type="date" id="dob">
+    <input type="file" id="uploadPic" accept="image/*" onchange="loadProfilePic(event)" />
+    <br />
+    <img id="profilePic" src="https://via.placeholder.com/150" alt="Profile Picture" />
+
+    <input type="text" id="username" placeholder="Enter your name" />
+    <br />
+    <input type="date" id="dob" />
+    <br />
+    <select id="themeSelector" onchange="changeTheme()">
+        <option value="blue">Blue Theme</option>
+        <option value="pink">Pink Theme</option>
+        <option value="dark">Dark Theme</option>
+    </select>
+    <br />
     <button onclick="calculateAge()">Calculate Age</button>
 
-    <div id="result"></div>
-    <div id="birthdayWish"></div>
+    <h2 id="greeting"></h2>
+    <h2 id="result"></h2>
+    <h3 id="zodiac"></h3>
+    <h3 id="birthdayWish"></h3>
+    <h3 id="milestone"></h3>
     <div id="clock"></div>
 
-    <audio id="birthdaySong" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+    <canvas id="confetti" width="400" height="400" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
 
     <script>
-        // Live Clock
-        setInterval(() => {
-            const clock = document.getElementById('clock');
-            const now = new Date();
-            clock.innerText = now.toLocaleTimeString();
-        }, 1000);
+        function loadProfilePic(event) {
+            const image = document.getElementById('profilePic');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        function changeTheme() {
+            const theme = document.getElementById('themeSelector').value;
+            if (theme === 'blue') {
+                document.body.style.background = 'linear-gradient(to right, #00c6ff, #0072ff)';
+            } else if (theme === 'pink') {
+                document.body.style.background = 'linear-gradient(to right, #ff7e5f, #feb47b)';
+            } else if (theme === 'dark') {
+                document.body.style.background = '#333';
+            }
+        }
 
         function calculateAge() {
-            const dob = new Date(document.getElementById('dob').value);
+            const username = document.getElementById('username').value;
+            const dob = document.getElementById('dob').value;
+
+            if (!username || !dob) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const birthDate = new Date(dob);
             const today = new Date();
-            let age = today.getFullYear() - dob.getFullYear();
-            const m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let m = today.getMonth() - birthDate.getMonth();
+
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
 
-            document.getElementById('result').innerText = `Your Age is ${age} years`;
+            document.getElementById('greeting').innerText = `Hello ${username}!`;
+            document.getElementById('result').innerText = `You are ${age} years old.`;
 
-            // Check Birthday
-            if (dob.getDate() === today.getDate() && dob.getMonth() === today.getMonth()) {
-                document.getElementById('birthdayWish').innerText = "🎉🎂 Happy Birthday 🎂🎉";
-                document.getElementById('birthdaySong').play();
+            // Zodiac Sign
+            const zodiacSign = getZodiacSign(birthDate.getDate(), birthDate.getMonth() + 1);
+            document.getElementById('zodiac').innerText = `Your Zodiac Sign is: ${zodiacSign}`;
+
+            // Birthday Check
+            if (today.getDate() === birthDate.getDate() && today.getMonth() === birthDate.getMonth()) {
+                document.getElementById('birthdayWish').innerText = '🎉 Happy Birthday ' + username + '! 🎂';
                 launchConfetti();
-                changeBackground();
             } else {
-                document.getElementById('birthdayWish').innerText = "";
+                document.getElementById('birthdayWish').innerText = '';
+            }
+
+            // Milestone
+            if (age === 18 || age === 25 || age === 50) {
+                document.getElementById('milestone').innerText = `🎉 Congratulations on your milestone: ${age} years! 🎉`;
+            } else {
+                document.getElementById('milestone').innerText = '';
             }
         }
 
+        function getZodiacSign(day, month) {
+            if((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius";
+            if((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces";
+            if((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries";
+            if((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus";
+            if((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini";
+            if((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer";
+            if((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo";
+            if((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo";
+            if((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra";
+            if((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio";
+            if((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius";
+            if((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn";
+        }
+
+        // Live Clock
+        function showTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString();
+            document.getElementById('clock').innerText = `Current Time: ${time}`;
+        }
+        setInterval(showTime, 1000);
+
+        // Confetti
         function launchConfetti() {
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
+                ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                ctx.beginPath();
+                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 5, 0, Math.PI * 2);
+                ctx.fill();
             }
-        }
-
-        function changeBackground() {
-            setInterval(() => {
-                document.body.style.background = `linear-gradient(135deg, hsl(${Math.random() * 360}, 100%, 50%), hsl(${Math.random() * 360}, 100%, 50%))`;
-            }, 2000);
         }
     </script>
 
