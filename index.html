@@ -1,6 +1,6 @@
 # Age-calculator-
-This is very useful app in the word it is calculate your age correct 
-<!DOCTYPE html>
+This is a very useful app in the world  It correct age calculator app 
+html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,45 +55,6 @@ This is very useful app in the word it is calculate your age correct
         button:hover {
             background: linear-gradient(135deg, #0072ff, #00c6ff);
         }
-        #result {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            color: #0072ff;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+        tor">
+    <h1>Age 
 
-<div class="calculator">
-    <h1>Age Calculator</h1>
-    <input type="date" id="birthdate">
-    <br>
-    <button onclick="calculateAge()">Calculate</button>
-    <div id="result"></div>
-</div>
-
-<script>
-    function calculateAge() {
-        let birthdate = document.getElementById('birthdate').value;
-        if (birthdate === "") {
-            alert("Please select your birthdate.");
-            return;
-        }
-
-        let birthDate = new Date(birthdate);
-        let today = new Date();
-
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let monthDiff = today.getMonth() - birthDate.getMonth();
-
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        document.getElementById('result').innerText = `You are ${age} years old.`;
-    }
-</script>
-
-</body>
-</html>
