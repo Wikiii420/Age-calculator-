@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Event Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+        }
+        header {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+        section {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .event {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .event h2 {
+            margin-top: 0;
+        }
+        .vip-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: gold;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .register-btn {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .register-btn:hover {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>VIP Event Management</h1>
+    </header>
+
+    <section>
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Luxury Wedding Ceremony</h2>
+            <p>Date: 25th June 2025</p>
+            <p>Location: Pearl Continental, Lahore</p>
+            <button class="register-btn" onclick="registerEvent('Luxury Wedding Ceremony')">Register Now</button>
+        </div>
+
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Exclusive Birthday Party</h2>
+            <p>Date: 1st July 2025</p>
+            <p>Location: Royal Palm, Lahore</p>
+            <button class="register-btn" onclick="registerEvent('Exclusive Birthday Party')">Register Now</button>
+        </div>
+
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Corporate Gala Night</h2>
+            <p>Date: 15th July 2025</p>
+            <p>Location: PC Karachi</p>
+            <button class="register-btn" onclick="registerEvent('Corporate Gala Night')">Register Now</button>
+        </div>
+    </section>
+
+    <script>
+        function registerEvent(eventName) {
+            alert("🎉 You have successfully registered for " + eventName + "!");
+        }
+    </script>
+
+</body>
+  </html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Event Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+        }
+        header {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 40px;
+        }
+        section {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .event {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .event h2 {
+            margin-top: 0;
+        }
+        .vip-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: gold;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .register-btn {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .register-btn:hover {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>VIP Event Management</h1>
+    </header>
+
+    <section>
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Luxury Wedding Ceremony</h2>
+            <p>Date: 25th June 2025</p>
+            <p>Location: Pearl Continental, Lahore</p>
+            <button class="register-btn" onclick="registerEvent('Luxury Wedding Ceremony')">Register Now</button>
+        </div>
+
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Exclusive Birthday Party</h2>
+            <p>Date: 1st July 2025</p>
+            <p>Location: Royal Palm, Lahore</p>
+            <button class="register-btn" onclick="registerEvent('Exclusive Birthday Party')">Register Now</button>
+        </div>
+
+        <div class="event">
+            <div class="vip-badge">VIP</div>
+            <h2>Corporate Gala Night</h2>
+            <p>Date: 15th July 2025</p>
+            <p>Location: PC Karachi</p>
+            <button class="register-btn" onclick="registerEvent('Corporate Gala Night')">Register Now</button>
+        </div>
+    </section>
+
+    <script>
+        function registerEvent(eventName) {
+            alert("🎉 You have successfully registered for " + eventName + "!");
+        }
+    </script>
+
+</body>
+  </html>
